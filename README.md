@@ -17,5 +17,7 @@ solution to the goals set. Such potential can lead to some unusual .......outcom
 
 the desire to be able to apply this type of paraadigm to learning a task is high!!!
 
+*** the aim is to design a reusable Library *** 
 
+here it would be desireable to have an interface / Abstract class Which can be overwritten with customised ** FITNESS ** / ** CROSSOVER ** / ** MUTATION ** functions etc .....
 
