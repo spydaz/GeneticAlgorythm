@@ -2,7 +2,6 @@
 
     Public Structure Population
         Public CurrentPopulation As List(Of DNA)
-
         ''' <summary>
         ''' Create an initial random popluation based on phrase inputted
         ''' </summary>
@@ -59,7 +58,6 @@
             Next
             Return ReproductionPool
         End Function
-
         Public Shared Function SelectPopulation(ByRef NaturalSelectionPool As Population) As Population
             Dim SelectionPopulation As New Population
             SelectionPopulation.CurrentPopulation = New List(Of DNA)
@@ -91,7 +89,7 @@
             Dim str As String = ""
 
 
-            str = Fitness.ToString
+            str = Me.Fitness.ToString
 
             Return str
         End Function
@@ -109,7 +107,6 @@
             Return NewDNA
         End Function
         Public Shared Function GenerateChar(ByRef num As Integer) As Char
-
             GenerateChar = Chr(num)
         End Function
         Public Shared Function CalculateFitness(ByRef Target As DNA, ByRef TestCell As DNA) As Integer
@@ -193,27 +190,69 @@
 
     End Structure
     ''' <summary>
-    ''' Used to generate a new population
+    ''' Used to generate a new population ---- (rough model)
     ''' </summary>
     Public Class GeneticAlgoRhythm
+
+
+        ''' <summary>
+        ''' The phrase Converted to a DNA object
+        ''' </summary>
+        Public TargetDNA As New DNA
+        Public TargetPhrase As String = ""
+        Public InitialPopulation As Integer = 0
+        Public MutationRate As Double = 0.1
+        Public LearningPhrase As String = ""
+
 
         Public Sub New(ByRef Phrase As String, ByRef InitialPopulation As Integer, ByRef MutationRate As Integer)
 
 
         End Sub
 
+        '-----------------------Workspace -------------------------------
 
+
+        Public Function CalcFitness(ByRef StartPop As Population) As Population
+
+            For Each item In StartPop.CurrentPopulation
+                item.Fitness = DNA.CalculateFitness(TargetDNA, item)
+
+            Next
+            Return StartPop
+        End Function
 
 #Region "Natural Selection"
         'Calc Fitness 
         'For each DNA > FITNESS CUT OFF
         'ADD TO NEW POOL
         Private NaturalSelectionPool As New Population
+
+        Public Function NaturalSelectionProcess(ByRef StartPopulation As Population) As Population
+
+            StartPopulation = CalcFitness(StartPopulation)
+            StartPopulation = SelectPopulation(StartPopulation)
+            Dim CrossoverPop As Population = CrossOverPopulation(StartPopulation)
+            Dim MutationPop As Population = MutatePopulation(StartPopulation)
+            Dim NewPopulation As Population = ReproducePopulation(MutationPop, CrossoverPop)
+
+            Return NewPopulation
+        End Function
+        Public Function SelectPopulation(ByRef StartPopulation As Population) As Population
+
+            StartPopulation = Population.SelectPopulation(StartPopulation)
+
+            Return StartPopulation
+        End Function
 #End Region
 
 #Region "Crossover"
 
+        Public Function CrossOverPopulation(ByRef StartPopulation As Population) As Population
 
+            StartPopulation = Population.CrossOverPopulation(StartPopulation)
+            Return StartPopulation
+        End Function
 
 
 #End Region
@@ -221,12 +260,24 @@
 #Region "Mutate"
 
 
+        Public Function MutatePopulation(ByRef StartPopulation As Population) As Population
+
+            StartPopulation = Population.MutatePopulation(StartPopulation, MutationRate)
+
+            Return StartPopulation
+        End Function
 #End Region
 
 #Region "Reproduce "
         Private ReproductionPool As New Population
 
 
+        Public Function ReproducePopulation(ByRef MutationPop As Population, ByRef CrossoverPop As Population) As Population
+
+            Dim NewPop As Population = Population.ReproducePopulation(MutationPop, CrossoverPop)
+
+            Return NewPop
+        End Function
 
 
 #End Region
