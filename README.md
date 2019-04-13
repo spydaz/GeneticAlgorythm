@@ -23,7 +23,9 @@ here it would be desireable to have an interface / Abstract class Which can be o
 
 ** FITNESS **;
 / ** CROSSOVER ** / 
-** MUTATION ** 
+** MUTATION **;
+
+
 
 functions etc .....
 
