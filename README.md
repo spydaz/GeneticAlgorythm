@@ -21,9 +21,9 @@ the desire to be able to apply this type of paraadigm to learning a task is high
 
 here it would be desireable to have an interface / Abstract class Which can be overwritten with customised ;
 
-** FITNESS **;
-/ ** CROSSOVER ** / 
-** MUTATION **;
+## ** FITNESS **;
+## ** CROSSOVER ** / 
+## MUTATION **;
 
 
 
